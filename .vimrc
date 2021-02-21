@@ -15,10 +15,10 @@ Plugin 'hashivim/vim-terraform'
 
 " useful plugins
 Plugin 'vim-airline/vim-airline'
-Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'craigemery/vim-autotag'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'alvan/vim-closetag'
+Plugin 'junegunn/fzf'
 
 "" colorscheme
 Plugin 'fatih/molokai'
@@ -64,6 +64,10 @@ let g:terraform_fmt_on_save=1
 " vim-closetag settings
 let g:closetag_filenames = '*.html,*.xhtml,*.phtml'
 let g:closetag_filetypes = 'html,xhtml,phtml'
+
+"  -----------------------------------------
+" map ctrl+p to fzf
+nmap <C-P> :FZF<CR>
 
 "  -----------------------------------------
 " non plugin settings
