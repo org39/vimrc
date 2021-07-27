@@ -12,13 +12,16 @@ Plugin 'leafgarland/typescript-vim'
 Plugin 'thanethomson/vim-jenkinsfile'
 Plugin 'tianon/vim-docker'
 Plugin 'hashivim/vim-terraform'
+Plugin 'thecodesmith/vim-groovy'
 
 " useful plugins
 Plugin 'vim-airline/vim-airline'
 Plugin 'craigemery/vim-autotag'
-Plugin 'Valloric/YouCompleteMe'
+" Plugin 'Valloric/YouCompleteMe'
+Plugin 'codota/tabnine-vim'
 Plugin 'alvan/vim-closetag'
 Plugin 'junegunn/fzf'
+Plugin 'Yggdroot/indentLine'
 
 "" colorscheme
 Plugin 'fatih/molokai'
@@ -101,11 +104,13 @@ autocmd BufRead,BufNewFile *.template set filetype=cftemplate
 autocmd FileType proto set tabstop=4|set softtabstop=4|set shiftwidth=4|set expandtab
 autocmd BufRead,BufNewFile *.proto set filetype=proto
 
+autocmd FileType typescript set tabstop=2|set softtabstop=2|set shiftwidth=2|set expandtab
+autocmd BufRead,BufNewFile *.ts set filetype=typescript
+
 set ai
 set si
 
 set nowrap
-set vb
 set listchars=extends:>,precedes:<
 set showmatch
 set scrolloff=3
