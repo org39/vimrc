@@ -21,7 +21,7 @@ Plugin 'craigemery/vim-autotag'
 Plugin 'codota/tabnine-vim'
 Plugin 'alvan/vim-closetag'
 Plugin 'junegunn/fzf'
-Plugin 'nathanaelkane/vim-indent-guides'
+Plugin 'Yggdroot/indentLine'
 
 "" colorscheme
 Plugin 'fatih/molokai'
