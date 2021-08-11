@@ -12,13 +12,16 @@ Plugin 'leafgarland/typescript-vim'
 Plugin 'thanethomson/vim-jenkinsfile'
 Plugin 'tianon/vim-docker'
 Plugin 'hashivim/vim-terraform'
+Plugin 'thecodesmith/vim-groovy'
 
 " useful plugins
 Plugin 'vim-airline/vim-airline'
 Plugin 'craigemery/vim-autotag'
-Plugin 'Valloric/YouCompleteMe'
+" Plugin 'Valloric/YouCompleteMe'
+Plugin 'codota/tabnine-vim'
 Plugin 'alvan/vim-closetag'
 Plugin 'junegunn/fzf'
+Plugin 'nathanaelkane/vim-indent-guides'
 
 "" colorscheme
 Plugin 'fatih/molokai'
@@ -70,6 +73,11 @@ let g:closetag_filetypes = 'html,xhtml,phtml'
 nmap <C-P> :FZF<CR>
 
 "  -----------------------------------------
+"  enable vim-indent-guides
+" let g:indent_guides_enable_on_vim_startup = 1
+
+
+"  -----------------------------------------
 " non plugin settings
 set tabstop=2
 set softtabstop=2
@@ -101,11 +109,13 @@ autocmd BufRead,BufNewFile *.template set filetype=cftemplate
 autocmd FileType proto set tabstop=4|set softtabstop=4|set shiftwidth=4|set expandtab
 autocmd BufRead,BufNewFile *.proto set filetype=proto
 
+autocmd FileType typescript set tabstop=2|set softtabstop=2|set shiftwidth=2|set expandtab
+autocmd BufRead,BufNewFile *.ts set filetype=typescript
+
 set ai
 set si
 
 set nowrap
-set vb
 set listchars=extends:>,precedes:<
 set showmatch
 set scrolloff=3
@@ -115,33 +125,36 @@ set ru
 set nostartofline
 
 if has("multi_byte")
-    set encoding=utf-8
-    setglobal fileencoding=utf-8
-    "setglobal bomb
-    set fileencodings=utf-8,euc-jp
-    set termencoding=utf-8
+	set encoding=utf-8
+	setglobal fileencoding=utf-8
+	"setglobal bomb
+	set fileencodings=utf-8,euc-jp
+	set termencoding=utf-8
 
-    if &termencoding == ""
-        let &termencoding = &encoding
-    endif
+	if &termencoding == ""
+		let &termencoding = &encoding
+	endif
 endif
 
 "" colorscheme
 let g:rehash256 = 1
 let g:molokai_original = 1
 colorscheme molokai
+let g:indent_guides_auto_colors = 0
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=black
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=236
 
 " Strip trailing whitespace
 function! <SID>StripTrailingWhitespaces()
-    " Preparation: save last search, and cursor position.
-    let _s=@/
-    let l = line(".")
-    let c = col(".")
-    " Do the business:
-    %s/\s\+$//e
-    " Clean up: restore previous search history, and cursor position
-    let @/=_s
-    call cursor(l, c)
+	" Preparation: save last search, and cursor position.
+	let _s=@/
+	let l = line(".")
+	let c = col(".")
+	" Do the business:
+	%s/\s\+$//e
+	" Clean up: restore previous search history, and cursor position
+	let @/=_s
+	call cursor(l, c)
 endfunction
 autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
 
