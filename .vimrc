@@ -17,11 +17,9 @@ Plugin 'thecodesmith/vim-groovy'
 " useful plugins
 Plugin 'vim-airline/vim-airline'
 Plugin 'craigemery/vim-autotag'
-" Plugin 'Valloric/YouCompleteMe'
 Plugin 'codota/tabnine-vim'
 Plugin 'alvan/vim-closetag'
 Plugin 'junegunn/fzf'
-Plugin 'Yggdroot/indentLine'
 
 "" colorscheme
 Plugin 'fatih/molokai'
@@ -71,11 +69,6 @@ let g:closetag_filetypes = 'html,xhtml,phtml'
 "  -----------------------------------------
 " map ctrl+p to fzf
 nmap <C-P> :FZF<CR>
-
-"  -----------------------------------------
-"  enable vim-indent-guides
-" let g:indent_guides_enable_on_vim_startup = 1
-
 
 "  -----------------------------------------
 " non plugin settings
