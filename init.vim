@@ -1,29 +1,29 @@
-" Vundle plugin
 set nocompatible
 filetype off
 
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-Plugin 'VundleVim/Vundle.vim'
+" plugins
+call plug#begin('~/.vim/plugged')
 
 " language integration
-Plugin 'fatih/vim-go'
-Plugin 'leafgarland/typescript-vim'
-Plugin 'thanethomson/vim-jenkinsfile'
-Plugin 'tianon/vim-docker'
-Plugin 'hashivim/vim-terraform'
-Plugin 'thecodesmith/vim-groovy'
+Plug 'fatih/vim-go'
+Plug 'leafgarland/typescript-vim'
+Plug 'thanethomson/vim-jenkinsfile'
+Plug 'tianon/vim-docker'
+Plug 'hashivim/vim-terraform'
+Plug 'thecodesmith/vim-groovy'
 
 " useful plugins
-Plugin 'vim-airline/vim-airline'
-Plugin 'craigemery/vim-autotag'
-Plugin 'codota/tabnine-vim'
-Plugin 'alvan/vim-closetag'
-Plugin 'junegunn/fzf'
+Plug 'vim-airline/vim-airline'
+Plug 'craigemery/vim-autotag'
+Plug 'alvan/vim-closetag'
+Plug 'junegunn/fzf'
+Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
+Plug 'github/copilot.vim'
 
 "" colorscheme
-Plugin 'fatih/molokai'
-call vundle#end()
+Plug 'fatih/molokai'
+call plug#end()
+
 filetype plugin indent on
 
 
@@ -69,6 +69,35 @@ let g:closetag_filetypes = 'html,xhtml,phtml'
 "  -----------------------------------------
 " map ctrl+p to fzf
 nmap <C-P> :FZF<CR>
+
+
+"  -----------------------------------------
+"  coc
+"
+" TextEdit might fail if hidden is not set.
+set hidden
+
+" Some servers have issues with backup files, see #649.
+set nobackup
+set nowritebackup
+
+" Use tab for trigger completion with characters ahead and navigate.
+" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Make <CR> auto-select the first completion item and notify coc.nvim to
+" format on enter, <cr> could be remapped by other vim plugin
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 "  -----------------------------------------
 " non plugin settings
@@ -153,4 +182,4 @@ endfunction
 autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
 
 set laststatus=2
-set clipboard=exclude:.*
+" set clipboard=exclude:.*
