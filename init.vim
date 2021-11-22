@@ -19,6 +19,8 @@ Plug 'alvan/vim-closetag'
 Plug 'junegunn/fzf'
 Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
 Plug 'github/copilot.vim'
+Plug 'vimwiki/vimwiki'
+Plug 'Yggdroot/indentLine'
 
 "" colorscheme
 Plug 'fatih/molokai'
@@ -183,3 +185,8 @@ autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
 
 set laststatus=2
 " set clipboard=exclude:.*
+
+
+" disable json conceal
+let g:indentLine_setConceal = 0 |
+let g:vim_json_syntax_conceal = 0
