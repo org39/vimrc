@@ -19,8 +19,9 @@ Plug 'alvan/vim-closetag'
 Plug 'junegunn/fzf'
 Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
 Plug 'github/copilot.vim'
-Plug 'vimwiki/vimwiki'
 Plug 'Yggdroot/indentLine'
+Plug 'uarun/vim-protobuf'
+Plug 'vim-test/vim-test'
 
 "" colorscheme
 Plug 'fatih/molokai'
@@ -72,6 +73,19 @@ let g:closetag_filetypes = 'html,xhtml,phtml'
 " map ctrl+p to fzf
 nmap <C-P> :FZF<CR>
 
+"  -----------------------------------------
+" copilot settings
+let g:copilot_filetypes = {
+	\ '*': v:true,
+	\ }
+
+
+" -----------------------------------------
+" aireline settings
+let g:airline#extensions#tabline#enabled = 1
+" not working
+map <C-Tab> :bn<CR>
+map <C-S-Tab> :bp<CR>
 
 "  -----------------------------------------
 "  coc
@@ -100,6 +114,11 @@ endfunction
 " format on enter, <cr> could be remapped by other vim plugin
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+"  -----------------------------------------
+"  vim-test
+" make test commands execute using dispatch.vim
+" let test#strategy = "neovim"
 
 "  -----------------------------------------
 " non plugin settings
@@ -131,7 +150,7 @@ autocmd BufRead,BufNewFile *.go set filetype=go
 autocmd FileType cftemplate set tabstop=2|set softtabstop=2|set shiftwidth=2|set expandtab
 autocmd BufRead,BufNewFile *.template set filetype=cftemplate
 
-autocmd FileType proto set tabstop=4|set softtabstop=4|set shiftwidth=4|set expandtab
+autocmd FileType proto set tabstop=2|set softtabstop=2|set shiftwidth=2|set expandtab
 autocmd BufRead,BufNewFile *.proto set filetype=proto
 
 autocmd FileType typescript set tabstop=2|set softtabstop=2|set shiftwidth=2|set expandtab
