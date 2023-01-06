@@ -3,6 +3,7 @@ export PATH=$PATH:$HOME/bin
 # alias vim as nvim
 alias vim=nvim
 alias vimdiff='nvim -d'
+export EDITOR=vim
 
 # Load rbenv
 export PATH="$HOME/.rbenv/bin:$PATH"
