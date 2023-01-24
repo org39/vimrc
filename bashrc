@@ -63,7 +63,7 @@ source <(argocd completion bash)
 
 # fzf
 source /usr/share/doc/fzf/examples/key-bindings.bash
-source /usr/share/doc/fzf/examples/completion.bash
+source /usr/share/bash-completion/bash_completion
 
 # tfenv
 export PATH="$HOME/.tfenv/bin:$PATH"

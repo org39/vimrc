@@ -29,7 +29,6 @@ call plug#end()
 
 filetype plugin indent on
 
-
 "  -----------------------------------------
 "  ctags settings
 set tags=tags;/
