@@ -231,13 +231,6 @@ function PipeGPT(task)
 	setlocal wrap
 endfunction
 
-function Review()
-	call PipeGPT("review")
-endfunction
+command -range Review call PipeGPT("review")
+command -range Explain call PipeGPT("explain")
 
-function Explain()
-	call PipeGPT("explain")
-endfunction
-
-command Review :call Review()
-command Explain :call Explain()
