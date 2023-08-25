@@ -19,15 +19,13 @@ Plug 'alvan/vim-closetag'
 Plug 'junegunn/fzf'
 Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
 Plug 'github/copilot.vim'
-Plug 'Yggdroot/indentLine'
 Plug 'uarun/vim-protobuf'
 Plug 'vim-test/vim-test'
+" Plug 'codota/tabnine-nvim', { 'do': './dl_binaries.sh' }
 
 "" colorscheme
 Plug 'fatih/molokai'
 call plug#end()
-
-filetype plugin indent on
 
 "  -----------------------------------------
 "  ctags settings
@@ -114,6 +112,20 @@ endfunction
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
+" tabnine
+" lua <<EOF
+" require('tabnine').setup({
+"   disable_auto_comment=true,
+"   accept_keymap="<Tab>",
+"   dismiss_keymap = "<C-]>",
+"   debounce_ms = 800,
+"   suggestion_color = {gui = "#808080", cterm = 244},
+"   exclude_filetypes = {"TelescopePrompt"},
+"   log_file_path = nil, -- absolute path to Tabnine log file
+" })
+" EOF
+
+
 "  -----------------------------------------
 "  vim-test
 " make test commands execute using dispatch.vim
@@ -183,9 +195,6 @@ endif
 let g:rehash256 = 1
 let g:molokai_original = 1
 colorscheme molokai
-let g:indent_guides_auto_colors = 0
-autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=black
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=236
 
 " Strip trailing whitespace
 function! <SID>StripTrailingWhitespaces()
@@ -203,8 +212,32 @@ autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
 
 set laststatus=2
 " set clipboard=exclude:.*
+"
 
+function PipeGPT(task)
+	" get yanked text
+	let l:content = @@
 
-" disable json conceal
-let g:indentLine_setConceal = 0 |
-let g:vim_json_syntax_conceal = 0
+	" run pipegpt
+	let l:tmpfile = trim(system("mktemp"))
+	let l:output = system("printf '" . l:content . "' | pipegpt " . a:task)
+
+	" write the output
+	call writefile(split(l:output, "\n"), l:tmpfile)
+	"
+	" open the tmp file
+	execute "vsplit " . l:tmpfile
+	setlocal filetype=markdown
+	setlocal wrap
+endfunction
+
+function Review()
+	call PipeGPT("review")
+endfunction
+
+function Explain()
+	call PipeGPT("explain")
+endfunction
+
+command Review :call Review()
+command Explain :call Explain()

@@ -48,6 +48,15 @@ export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 
+# fzf
+source /usr/share/doc/fzf/examples/key-bindings.bash
+source /usr/share/bash-completion/bash_completion
+
+# tfenv
+export PATH="$HOME/.tfenv/bin:$PATH"
+
+## auto completion ##
+
 # kubectl auto completion
 source <(kubectl completion bash)
 
@@ -60,13 +69,6 @@ source <(linkerd completion bash)
 
 # argocd auto completion
 source <(argocd completion bash)
-
-# fzf
-source /usr/share/doc/fzf/examples/key-bindings.bash
-source /usr/share/bash-completion/bash_completion
-
-# tfenv
-export PATH="$HOME/.tfenv/bin:$PATH"
 
 # awscli auto completion
 complete -C "/usr/local/bin/aws_completer" aws
@@ -86,3 +88,13 @@ source <(pip completion --bash)
 
 # loto auto completion
 source <(loto completion bash)
+
+# yq auto completion
+source <(yq shell-completion bash)
+
+# Google Cloud SDK
+if [ -f '/home/filepang/bin/google-cloud-sdk/path.bash.inc' ]; then . '/home/filepang/bin/google-cloud-sdk/path.bash.inc'; fi
+if [ -f '/home/filepang/bin/google-cloud-sdk/completion.bash.inc' ]; then . '/home/filepang/bin/google-cloud-sdk/completion.bash.inc'; fi
+
+# opensearch cli
+source <(opensearch-cli completion bash)
