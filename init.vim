@@ -215,12 +215,22 @@ set laststatus=2
 "
 
 function PipeGPT(task)
-	" get yanked text
+	" backup current yanked text
+	let l:old_reg = @@
+
+	" get selected text
+	let [line_start, col_start] = getpos("'<")[1:2]
+	let [line_end, col_end] = getpos("'>")[1:2]
+
+	" yank the visually selected text
+	execute 'normal! ' . line_start . 'G' . col_start . '|v' . line_end . 'G' . col_end . '|y'
 	let l:content = @@
 
 	" run pipegpt
 	let l:tmpfile = trim(system("mktemp"))
-	let l:output = system("printf '" . l:content . "' | pipegpt " . a:task)
+	" save the content to a tmp file
+	call writefile(split(l:content, "\n"), l:tmpfile)
+	let l:output = system("cat " . l:tmpfile . " | pipegpt " . a:task)
 
 	" write the output
 	call writefile(split(l:output, "\n"), l:tmpfile)
@@ -229,8 +239,11 @@ function PipeGPT(task)
 	execute "vsplit " . l:tmpfile
 	setlocal filetype=markdown
 	setlocal wrap
+
+	" restore the yanked text
+	let @@ = l:old_reg
 endfunction
 
-command -range Review call PipeGPT("review")
-command -range Explain call PipeGPT("explain")
-
+command -range MikuReview call PipeGPT("review")
+command -range MikuExplain call PipeGPT("explain")
+command -range MikuTestcode call PipeGPT("testcode")
