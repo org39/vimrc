@@ -14,14 +14,16 @@ Plug 'thecodesmith/vim-groovy'
 
 " useful plugins
 Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'craigemery/vim-autotag'
 Plug 'alvan/vim-closetag'
 Plug 'junegunn/fzf'
-Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'github/copilot.vim'
 Plug 'uarun/vim-protobuf'
 Plug 'vim-test/vim-test'
-" Plug 'codota/tabnine-nvim', { 'do': './dl_binaries.sh' }
+Plug 'codota/tabnine-nvim', { 'do': './dl_binaries.sh' }
+" Plug 'rhysd/reply.vim', { 'on': ['Repl', 'ReplAuto'] }
 
 "" colorscheme
 Plug 'fatih/molokai'
@@ -30,31 +32,6 @@ call plug#end()
 "  -----------------------------------------
 "  ctags settings
 set tags=tags;/
-
-"  -----------------------------------------
-" ycm settings
-let g:ycm_autoclose_preview_window_after_completion = 0
-let g:ycm_autoclose_preview_window_after_insertion  = 1
-let g:ycm_language_server =
-  \ [
-  \   {
-  \     'name': 'gopls',
-  \     'cmdline': [ 'gopls' , "-rpc.trace" ],
-  \     'filetypes': [ 'go' ],
-  \     "project_root_files": [ "go.mod" ]
-  \   }
-  \ ]
-
-"  -----------------------------------------
-" gopls settings
-let g:go_def_mode='gopls'
-let g:go_info_mode='gopls'
-let g:go_highlight_types = 1
-let g:go_highlight_fields = 1
-let g:go_highlight_function_calls = 1
-let g:go_highlight_extra_types = 1
-let g:go_highlight_build_constraints = 1
-let g:go_highlight_generate_tags = 1
 
 "  -----------------------------------------
 " terraform settings
@@ -78,8 +55,10 @@ let g:copilot_filetypes = {
 
 
 " -----------------------------------------
-" aireline settings
+" airline#extensions#tabline#enabled settings
 let g:airline#extensions#tabline#enabled = 1
+" let g:airline_theme = 'hatsunemiku'
+
 " not working
 map <C-Tab> :bn<CR>
 map <C-S-Tab> :bp<CR>
@@ -192,9 +171,17 @@ if has("multi_byte")
 endif
 
 "" colorscheme
-let g:rehash256 = 1
-let g:molokai_original = 1
-colorscheme molokai
+" let g:rehash256 = 1
+" let g:molokai_original = 1
+" colorscheme molokai
+if !has('gui_running') && has('termguicolors')
+  " Use true colors (recommended)
+  set termguicolors
+endif
+syntax enable
+
+" for dark theme
+colorscheme hatsunemiku
 
 " Strip trailing whitespace
 function! <SID>StripTrailingWhitespaces()
@@ -234,7 +221,7 @@ function PipeGPT(task)
 
 	" write the output
 	call writefile(split(l:output, "\n"), l:tmpfile)
-	"
+
 	" open the tmp file
 	execute "vsplit " . l:tmpfile
 	setlocal filetype=markdown
@@ -247,3 +234,11 @@ endfunction
 command -range MikuReview call PipeGPT("review")
 command -range MikuExplain call PipeGPT("explain")
 command -range MikuTestcode call PipeGPT("testcode")
+command -range MikuRefactor call PipeGPT("refactor")
+command -range MikuComplete call PipeGPT("complete")
+
+" adjust split size
+noremap <silent> <C-S-Left> :vertical resize +2<CR>
+noremap <silent> <C-S-Right> :vertical resize -2<CR>
+noremap <silent> <C-S-Up> :resize +2<CR>
+noremap <silent> <C-S-Down> :resize -2<CR>

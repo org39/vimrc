@@ -20,7 +20,7 @@ export NVM_DIR="$HOME/.nvm"
 # python3 local bin
 export PATH=$PATH:$HOME/.local/bin
 
-# git
+# git helper
 alias gl="git log -n 20 --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 alias gs='git status'
 function gr {
@@ -37,6 +37,7 @@ function gr {
 		git pull origin $current_br
 	fi
 }
+alias gcommit='git diff --staged | pipegpt commit_messages | git commit -e -F -'
 
 # golang
 export GOROOT=/usr/local/go
@@ -98,3 +99,53 @@ if [ -f '/home/filepang/bin/google-cloud-sdk/completion.bash.inc' ]; then . '/ho
 
 # opensearch cli
 source <(opensearch-cli completion bash)
+
+# pipegpt auto completion
+source <(pipegpt completion bash)
+
+function shell {
+	input=$1
+
+	cmd=$(echo "$input" | pipegpt shell)
+	if [ $? -ne 0 ]; then
+		echo "$cmd"
+		return
+	fi
+
+	cmd=$(echo "$cmd" | jq -r '.command')
+	if [ $? -ne 0 ]; then
+		echo "$cmd"
+		return
+	fi
+
+	printf "Run '%s' ? [Y/n] " "$cmd"
+	read -r yn
+
+  if [ "$yn" == "y" ] || [ "$yn" == "Y" ] || ["$yn" == ""]; then
+    echo "$cmd" | bash --
+  fi
+}
+
+# gh auto completion
+eval "$(gh completion -s bash)"
+
+# make helper
+function make {
+	cwd=$(pwd)
+
+	# if Makefile exists, run make
+	if [ -f "$cwd/Makefile" ]; then
+		/usr/bin/make "$@"
+		return
+	fi
+
+	# if Makefile not exists,
+	# find Makefile in parent directory recursively until reach home directory
+	while [ "$cwd" != "$HOME" ]; do
+		cwd=$(dirname "$cwd")
+		if [ -f "$cwd/Makefile" ]; then
+			(cd "$cwd" && /usr/bin/make "$@")
+			return
+		fi
+	done
+}
